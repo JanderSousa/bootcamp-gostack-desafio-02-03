@@ -1,11 +1,9 @@
-'use strict';
-
 module.exports = {
-  up: (queryInterface) => {
+  up: queryInterface => {
     return queryInterface.removeColumn('users', 'avatar_id');
   },
 
-  down: (queryInterface) => {
+  down: (queryInterface, Sequelize) => {
     return queryInterface.addColumn('users', 'avatar_id', {
       type: Sequelize.INTEGER,
       references: { model: 'files', key: 'id' },

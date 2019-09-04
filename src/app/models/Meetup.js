@@ -7,12 +7,13 @@ class Meetup extends Model {
         description: Sequelize.STRING,
         location: Sequelize.STRING,
         dateHour: Sequelize.DATE,
-        banner: Sequelize.STRING,
       },
       {
         sequelize,
       }
     );
+
+    return this;
   }
 
   static associate(models) {
