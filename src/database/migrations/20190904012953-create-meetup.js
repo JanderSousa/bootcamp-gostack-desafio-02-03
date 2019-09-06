@@ -1,6 +1,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('meetup', {
+    return queryInterface.createTable('meetups', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -16,13 +16,20 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
-      dateHour: {
+      datehour: {
         type: Sequelize.DATE,
         allowNull: false,
       },
       banner_id: {
         type: Sequelize.INTEGER,
         references: { model: 'files', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+        allowNull: true,
+      },
+      user_id: {
+        type: Sequelize.INTEGER,
+        references: { model: 'users', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
         allowNull: true,
@@ -39,6 +46,6 @@ module.exports = {
   },
 
   down: queryInterface => {
-    return queryInterface.dropTable('meetup');
+    return queryInterface.dropTable('meetups');
   },
 };
