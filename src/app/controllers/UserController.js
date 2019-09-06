@@ -36,6 +36,9 @@ class UserController {
   }
 
   async update(req, res) {
+    /**
+     * Validação de entrada de dados
+     */
     const Schema = Yup.object().shape({
       name: Yup.string(),
       email: Yup.string().email(),
