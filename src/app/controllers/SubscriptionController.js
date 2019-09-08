@@ -1,12 +1,34 @@
 import { isBefore } from 'date-fns';
+import { Op } from 'sequelize';
 
 import Subscription from '../models/Subscription';
 import Meetup from '../models/Meetup';
 import User from '../models/User';
-import Queue from '../../lib/Queue';
+import Queue from '../../lib/Queue'; // Fila
 import SubscriptionMail from '../jobs/SubscriptionMail';
 
 class SubscriptionController {
+  async index(req, res) {
+    const meetups = await Subscription.findAll({
+      where: {
+        user_id: req.userId,
+      },
+      include: [
+        {
+          model: Meetup,
+          as: 'meetup',
+          where: {
+            datehour: {
+              [Op.gt]: new Date(),
+            },
+          },
+        },
+      ],
+      order: [['meetup', 'datehour']],
+    });
+    return res.json(meetups);
+  }
+
   async store(req, res) {
     const meetup = await Meetup.findByPk(req.params.meetupId);
 
